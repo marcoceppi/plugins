@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Copyright
+
+set -e
+
+if [ "$1" == "--description" ]; then
+  echo "Resolve a unit and immediately launch debug hooks"
+  exit 0
+fi
+
+if [ "$1" == '--help' ]; then
+  echo "juju logs <unit>"
+  echo ""
+  echo "good stuff here"
+  exit 0
+fi
+
+cur_env=`cat $HOME/.juju/current-environment`
+
+if [ -d $HOME/.juju/$cur_env/log ]; then
+  tail -F $HOME/.juju/$cur_env/log/all-machines.log
+else
+  juju debug-log
+fi
