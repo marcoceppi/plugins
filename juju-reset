@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ "$1" == "--help" ]; then
+  echo "juju reset [ENV]"
+  exit 0
+fi
+
+if [ "$1" == "--description" ]; then
+  echo "Reset an environment to just the bootstrapped node."
+  exit 0
+fi
+
+if ! which juju-deployer >/dev/null; then
+  echo "You must install juju-deployer to use this plugin." >&2
+  exit 2
+fi
+
+if [ ! -z "$1" ]; then
+  args="-e '$1'"
+fi
+
+juju deployer -T "$args"
